@@ -4,28 +4,49 @@ import './App.css';
 import Checkbox from './components/Checkbox';
 
 function App() {
-  const [checkedOne, setCheckedOne] = useState(false);
-  const [checkedTwo, setCheckedTwo] = useState(false);
-  const [checkedThree, setCheckedThree] = useState(false);
-  const [checkedFour, setCheckedFour] = useState(false);
+  const [passwordGen, setPasswordGen] = useState({
+    length: 5,
+    uppercase: false,
+    lowercase: false,
+    numbers: false,
+    symbols: false,
+  });
   const [handelText, setHandelText] = useState('');
   const [copied, setCopied] = useState(false);
-  const [handelPasswordLen, setHandelPasswordLen] = useState(5);
 
-  const handleChangeOne = () => {
-    setCheckedOne(!checkedOne);
+  const handleChangeUppercase = () => {
+    setPasswordGen({
+      ...passwordGen,
+      uppercase: !passwordGen.uppercase,
+    });
   };
 
-  const handleChangeTwo = () => {
-    setCheckedTwo(!checkedTwo);
+  const handleChangeLowercase = () => {
+    setPasswordGen({
+      ...passwordGen,
+      lowercase: !passwordGen.lowercase,
+    });
   };
 
-  const handleChangeThree = () => {
-    setCheckedThree(!checkedThree);
+  const handleChangeNumbers = () => {
+    setPasswordGen({
+      ...passwordGen,
+      numbers: !passwordGen.numbers,
+    });
   };
 
-  const handleChangeFour = () => {
-    setCheckedFour(!checkedFour);
+  const handleChangeSymbols = () => {
+    setPasswordGen({
+      ...passwordGen,
+      symbols: !passwordGen.symbols,
+    });
+  };
+
+  const setPasswordLength = (val) => {
+    setPasswordGen({
+      ...passwordGen,
+      length: val,
+    });
   };
 
   function generatePassword() {
@@ -40,31 +61,37 @@ function App() {
       letter.toUpperCase()
     );
 
+    let letterLength = passwordGen.length;
+    let letterUppercase = passwordGen.uppercase;
+    let letterLowercase = passwordGen.lowercase;
+    let letterNumbers = passwordGen.numbers;
+    let letterSymbols = passwordGen.symbols;
+
     const generateTheWord = (
-      length,
-      hasNumbers,
-      hasSymbols,
-      hasLowercase,
-      hasUppercase
+      letterLength,
+      letterUppercase,
+      letterLowercase,
+      letterNumbers,
+      letterSymbols
     ) => {
       const availableCharacters = [
-        ...(hasNumbers ? numbers : []),
-        ...(hasSymbols ? symbols : []),
-        ...(hasLowercase ? lowerCaseLetters : []),
-        ...(hasUppercase ? upperCaseLetters : []),
+        ...(letterLowercase ? lowerCaseLetters : []),
+        ...(letterUppercase ? upperCaseLetters : []),
+        ...(letterNumbers ? numbers : []),
+        ...(letterSymbols ? symbols : []),
       ];
       const shuffleArr = (array) => array.sort(() => Math.random() - 0.5);
-      const characters = shuffleArr(availableCharacters).slice(0, length);
+      const characters = shuffleArr(availableCharacters).slice(0, letterLength);
       setHandelText(characters.join(''));
       return characters;
     };
 
     generateTheWord(
-      handelPasswordLen,
-      checkedFour,
-      checkedThree,
-      checkedTwo,
-      checkedOne
+      letterLength,
+      letterUppercase,
+      letterLowercase,
+      letterNumbers,
+      letterSymbols
     );
   }
 
@@ -87,7 +114,7 @@ function App() {
               setCopied(true);
               setInterval(() => {
                 setCopied(false);
-              }, 2500);
+              }, 2000);
             }
           }}
         >
@@ -102,29 +129,35 @@ function App() {
           id="length"
           min="4"
           max="20"
-          value={handelPasswordLen}
-          onChange={(e) => setHandelPasswordLen(e.target.value)}
+          value={passwordGen.length}
+          onChange={(e) => setPasswordLength(e.target.value)}
         />
       </div>
       <br />
       <div>
         <label>Include uppercase letters</label>
-        <Checkbox value={checkedOne} onChange={handleChangeOne} />
+        <Checkbox
+          value={passwordGen.uppercase}
+          onChange={handleChangeUppercase}
+        />
       </div>
       <br />
       <div>
         <label>Include lowercase letters</label>
-        <Checkbox value={checkedTwo} onChange={handleChangeTwo} />
+        <Checkbox
+          value={passwordGen.lowercase}
+          onChange={handleChangeLowercase}
+        />
       </div>
       <br />
       <div>
         <label>Include numbers</label>
-        <Checkbox value={checkedThree} onChange={handleChangeThree} />
+        <Checkbox value={passwordGen.numbers} onChange={handleChangeNumbers} />
       </div>
       <br />
       <div>
         <label>Include symbols</label>
-        <Checkbox value={checkedFour} onChange={handleChangeFour} />
+        <Checkbox value={passwordGen.symbols} onChange={handleChangeSymbols} />
       </div>
       <br />
       <div>
