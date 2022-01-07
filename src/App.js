@@ -50,8 +50,8 @@ function App() {
   };
 
   function generatePassword() {
-    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-    const symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'];
+    const numbersArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+    const symbolsArray = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'];
 
     const characterCodes = Array.from(Array(26)).map((_e, i) => i + 97);
     const lowerCaseLetters = characterCodes.map((code) =>
@@ -61,38 +61,28 @@ function App() {
       letter.toUpperCase()
     );
 
-    let letterLength = passwordGen.length;
-    let letterUppercase = passwordGen.uppercase;
-    let letterLowercase = passwordGen.lowercase;
-    let letterNumbers = passwordGen.numbers;
-    let letterSymbols = passwordGen.symbols;
+    const { length, uppercase, lowercase, numbers, symbols } = passwordGen;
 
     const generateTheWord = (
-      letterLength,
-      letterUppercase,
-      letterLowercase,
-      letterNumbers,
-      letterSymbols
+      length,
+      uppercase,
+      lowercase,
+      numbers,
+      symbols
     ) => {
       const availableCharacters = [
-        ...(letterLowercase ? lowerCaseLetters : []),
-        ...(letterUppercase ? upperCaseLetters : []),
-        ...(letterNumbers ? numbers : []),
-        ...(letterSymbols ? symbols : []),
+        ...(lowercase ? lowerCaseLetters : []),
+        ...(uppercase ? upperCaseLetters : []),
+        ...(numbers ? numbersArray : []),
+        ...(symbols ? symbolsArray : []),
       ];
-      const shuffleArr = (array) => array.sort(() => Math.random() - 0.5);
-      const characters = shuffleArr(availableCharacters).slice(0, letterLength);
+      const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
+      const characters = shuffleArray(availableCharacters).slice(0, length);
       setHandelText(characters.join(''));
       return characters;
     };
 
-    generateTheWord(
-      letterLength,
-      letterUppercase,
-      letterLowercase,
-      letterNumbers,
-      letterSymbols
-    );
+    generateTheWord(length, uppercase, lowercase, numbers, symbols);
   }
 
   return (
