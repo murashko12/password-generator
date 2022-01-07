@@ -9,6 +9,7 @@ function App() {
   const [checkedThree, setCheckedThree] = useState(false);
   const [checkedFour, setCheckedFour] = useState(false);
   const [handelText, setHandelText] = useState('');
+  const [copied, setCopied] = useState(false);
   const [handelPasswordLen, setHandelPasswordLen] = useState(5);
 
   const handleChangeOne = () => {
@@ -28,11 +29,10 @@ function App() {
   };
 
   function generatePassword() {
-    console.log('generate');
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
     const symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'];
 
-    const characterCodes = Array.from(Array(26)).map((e, i) => i + 97);
+    const characterCodes = Array.from(Array(26)).map((_e, i) => i + 97);
     const lowerCaseLetters = characterCodes.map((code) =>
       String.fromCharCode(code)
     );
@@ -56,7 +56,6 @@ function App() {
       const shuffleArr = (array) => array.sort(() => Math.random() - 0.5);
       const characters = shuffleArr(availableCharacters).slice(0, length);
       setHandelText(characters.join(''));
-      console.log(characters);
       return characters;
     };
 
@@ -80,7 +79,20 @@ function App() {
           autoComplete="off"
           onChange={(e) => setHandelText(e.target.value)}
         />
-        <button className="btn">Copy</button>
+        <button
+          className="btn"
+          onClick={() => {
+            if (handelText != null) {
+              navigator.clipboard.writeText(handelText);
+              setCopied(true);
+              setInterval(() => {
+                setCopied(false);
+              }, 2500);
+            }
+          }}
+        >
+          {copied ? 'copied' : 'Copy'}
+        </button>
       </div>
       <br />
       <div>
