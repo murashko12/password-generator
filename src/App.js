@@ -86,72 +86,96 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <h2>Password Generator</h2>
-      <div>
-        <input
-          type="text"
-          value={handelText}
-          placeholder=""
-          autoComplete="off"
-          onChange={(e) => setHandelText(e.target.value)}
-        />
-        <button
-          className="btn"
-          onClick={() => {
-            if (handelText != null) {
-              navigator.clipboard.writeText(handelText);
-              setCopied(true);
-              setInterval(() => {
-                setCopied(false);
-              }, 2000);
-            }
-          }}
-        >
-          {copied ? 'copied' : 'Copy'}
-        </button>
-      </div>
-      <br />
-      <div>
-        <label>Password length</label>
-        <input
-          type="number"
-          id="length"
-          min="4"
-          max="20"
-          value={passwordGen.length}
-          onChange={(e) => setPasswordLength(e.target.value)}
-        />
-      </div>
-      <br />
-      <div>
-        <label>Include uppercase letters</label>
-        <Checkbox
-          value={passwordGen.uppercase}
-          onChange={handleChangeUppercase}
-        />
-      </div>
-      <br />
-      <div>
-        <label>Include lowercase letters</label>
-        <Checkbox
-          value={passwordGen.lowercase}
-          onChange={handleChangeLowercase}
-        />
-      </div>
-      <br />
-      <div>
-        <label>Include numbers</label>
-        <Checkbox value={passwordGen.numbers} onChange={handleChangeNumbers} />
-      </div>
-      <br />
-      <div>
-        <label>Include symbols</label>
-        <Checkbox value={passwordGen.symbols} onChange={handleChangeSymbols} />
-      </div>
-      <br />
-      <div>
-        <button onClick={generatePassword}>Generate password</button>
+    <div className="wrapper">
+      <div className="container wrapper-box">
+        <h2>Password Generator</h2>
+        <div className="password-box">
+          <input
+            type="text"
+            value={handelText}
+            placeholder=""
+            autoComplete="off"
+            onChange={(e) => setHandelText(e.target.value)}
+          />
+          <button
+            className="copy-button"
+            onClick={() => {
+              if (handelText.length > 0) {
+                navigator.clipboard.writeText(handelText);
+                setCopied(true);
+                setInterval(() => {
+                  setCopied(false);
+                }, 2000);
+              }
+            }}
+          >
+            {copied ? 'Copied!' : 'Copy text'}
+          </button>
+        </div>
+        <br />
+        <div className="word-crieteria__box">
+          <div>
+            <label>Password length</label>
+          </div>
+          <div>
+            <input
+              type="number"
+              min="4"
+              max="20"
+              value={passwordGen.length}
+              onChange={(e) => setPasswordLength(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="word-crieteria__box">
+          <div>
+            <label>Include uppercase letters</label>
+          </div>
+          <div>
+            <Checkbox
+              value={passwordGen.uppercase}
+              onChange={handleChangeUppercase}
+            />
+          </div>
+        </div>
+        <div className="word-crieteria__box">
+          <div>
+            <label>Include lowercase letters</label>
+          </div>
+          <div>
+            <Checkbox
+              value={passwordGen.lowercase}
+              onChange={handleChangeLowercase}
+            />
+          </div>
+        </div>
+        <div className="word-crieteria__box">
+          <div>
+            <label>Include numbers</label>
+          </div>
+          <div>
+            <Checkbox
+              value={passwordGen.numbers}
+              onChange={handleChangeNumbers}
+            />
+          </div>
+        </div>
+        <div className="word-crieteria__box">
+          <div>
+            <label>Include symbols</label>
+          </div>
+          <div>
+            <Checkbox
+              value={passwordGen.symbols}
+              onChange={handleChangeSymbols}
+            />
+          </div>
+        </div>
+        <div>
+          <button className="generate-button" onClick={generatePassword}>
+            Generate password
+          </button>
+        </div>
       </div>
     </div>
   );
