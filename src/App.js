@@ -4,7 +4,7 @@ import './App.css';
 import Checkbox from './components/Checkbox';
 
 function App() {
-  const [passwordGen, setPasswordGen] = useState({
+  const [password, setPassword] = useState({
     length: 5,
     uppercase: false,
     lowercase: false,
@@ -15,36 +15,36 @@ function App() {
   const [copied, setCopied] = useState(false);
 
   const handleChangeUppercase = () => {
-    setPasswordGen({
-      ...passwordGen,
-      uppercase: !passwordGen.uppercase,
+    setPassword({
+      ...password,
+      uppercase: !password.uppercase,
     });
   };
 
   const handleChangeLowercase = () => {
-    setPasswordGen({
-      ...passwordGen,
-      lowercase: !passwordGen.lowercase,
+    setPassword({
+      ...password,
+      lowercase: !password.lowercase,
     });
   };
 
   const handleChangeNumbers = () => {
-    setPasswordGen({
-      ...passwordGen,
-      numbers: !passwordGen.numbers,
+    setPassword({
+      ...password,
+      numbers: !password.numbers,
     });
   };
 
   const handleChangeSymbols = () => {
-    setPasswordGen({
-      ...passwordGen,
-      symbols: !passwordGen.symbols,
+    setPassword({
+      ...password,
+      symbols: !password.symbols,
     });
   };
 
   const setPasswordLength = (val) => {
-    setPasswordGen({
-      ...passwordGen,
+    setPassword({
+      ...password,
       length: val,
     });
   };
@@ -61,7 +61,7 @@ function App() {
       letter.toUpperCase()
     );
 
-    const { length, uppercase, lowercase, numbers, symbols } = passwordGen;
+    const { length, uppercase, lowercase, numbers, symbols } = password;
 
     const generateTheWord = (
       length,
@@ -119,10 +119,11 @@ function App() {
           </div>
           <div>
             <input
+              className="input__length"
               type="number"
               min="4"
               max="20"
-              value={passwordGen.length}
+              value={password.length}
               onChange={(e) => setPasswordLength(e.target.value)}
             />
           </div>
@@ -133,7 +134,7 @@ function App() {
           </div>
           <div>
             <Checkbox
-              value={passwordGen.uppercase}
+              value={password.uppercase}
               onChange={handleChangeUppercase}
             />
           </div>
@@ -144,7 +145,7 @@ function App() {
           </div>
           <div>
             <Checkbox
-              value={passwordGen.lowercase}
+              value={password.lowercase}
               onChange={handleChangeLowercase}
             />
           </div>
@@ -155,7 +156,7 @@ function App() {
           </div>
           <div>
             <Checkbox
-              value={passwordGen.numbers}
+              value={password.numbers}
               onChange={handleChangeNumbers}
             />
           </div>
@@ -166,7 +167,7 @@ function App() {
           </div>
           <div>
             <Checkbox
-              value={passwordGen.symbols}
+              value={password.symbols}
               onChange={handleChangeSymbols}
             />
           </div>
